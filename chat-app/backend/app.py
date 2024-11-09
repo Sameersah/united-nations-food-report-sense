@@ -15,10 +15,9 @@ async def get_response(id: str):
 
 
 @router.post("/prompt")
-async def post_prompt(message: str):
-    prompt = Prompt(message)
+async def post_prompt(prompt: Prompt):
     broker.send(prompt)
-    return { "id": prompt.id }
+    return { "id": prompt.id() }
 
 
 app.include_router(router)

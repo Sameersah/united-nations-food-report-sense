@@ -8,7 +8,8 @@ class Broker:
 
 
     def send(self, prompt: Prompt):
-        pass
+        print(prompt.id)
+        print(prompt.message)
 
 
     # Receive message and call cache.putResponse()...

@@ -5,17 +5,19 @@ from pydantic import BaseModel
 
 def hash(object):
     hash_object = hashlib.sha256()
-    hash_object.update(message.encode('utf-8'))
+    hash_object.update(object.encode('utf-8'))
     return hash_object.hexdigest()
 
 
 class Prompt(BaseModel):
-    id: None
     message: str
 
     def __init__(self, **data):
-        self.id = hash(data['message'])
-        self.message = data['message']
+        super().__init__(**data)
+
+
+    def id(self):
+        return hash(self.message)
 
 
 class Response(BaseModel):
