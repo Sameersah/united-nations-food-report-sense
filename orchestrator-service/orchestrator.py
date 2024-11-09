@@ -38,12 +38,12 @@ def connect_to_rabbitmq():
         print("Details:", str(e))
         exit(1)
 
-# Load or build the index
+
 index = load_or_build_index()
 print("Index loaded successfully.")
 query_engine = index.as_query_engine()
 
-# Query the index
+
 def on_message(ch, method, properties, body):
     question = body.decode()
     print(f"Received question: {question}")
@@ -69,11 +69,11 @@ def on_message(ch, method, properties, body):
 
 connection, channel = connect_to_rabbitmq()
 
-# Declare queues
+
 channel.queue_declare(queue='question_queue')
 channel.queue_declare(queue='response_queue')
 
-# Set up RabbitMQ consumer
+
 channel.basic_consume(queue='question_queue', on_message_callback=on_message)
 
 print("Waiting for questions...")
