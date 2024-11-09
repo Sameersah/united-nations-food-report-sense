@@ -49,14 +49,14 @@ def on_message(ch, method, properties, body):
     print(f"Received question: {question}")
 
     try:
-        # Query the index
+
         response = query_engine.query(question)
         print(f"Response: {response}")
 
-        # Send the response back to the response queue
+
         ch.basic_publish(
             exchange='',
-            routing_key='response_queue',  # Replace with your response queue name
+            routing_key='response_queue',
             body=str(response)
         )
         print("Response sent to response queue.")
