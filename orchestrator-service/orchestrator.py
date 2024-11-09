@@ -4,7 +4,7 @@ import pika
 from pika.exceptions import AMQPConnectionError
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageContext, load_index_from_storage
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "API_KEY"
 
 
 PERSIST_DIR = "./saved_index"
