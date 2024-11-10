@@ -1,10 +1,8 @@
-const API_URL = process.env.CHAT_BACKEND_API_URL;
-
 export const sendPrompt = async (prompt) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve('mock-id');
-    }, 100); // Simulate a short delay for sending the prompt
+    }, 100);
   });
 };
 

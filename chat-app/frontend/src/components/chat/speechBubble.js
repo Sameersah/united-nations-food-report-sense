@@ -7,8 +7,8 @@ const SpeechBubble = ({ text, isUser, isPlaceholder }) => {
     setExpanded(!expanded);
   };
 
-  const isLongText = text.length > 100; // Adjust the length as needed
-
+  const isLongText = text.length > 100;
+  
   return (
     <div className={`speech-bubble ${isUser ? 'speech-bubble-user' : 'speech-bubble-llm'} ${isPlaceholder ? 'speech-bubble-placeholder' : ''}`}>
       <div className="speech-bubble-content">

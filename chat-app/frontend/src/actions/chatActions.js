@@ -1,5 +1,5 @@
 import ChatActionTypes from '../constants/chatActionTypes';
-import { sendPrompt, getResponse } from '../api/mockChatApi';
+import { sendPrompt, getResponse } from '../mocks/mockChatApi';
 
 const POLLING_INTERVAL = parseInt(process.env.CHAT_BACKEND_POLLING_INTERVAL) || 1000;
 const POLLING_LIMIT = parseInt(process.env.CHAT_BACKEND_POLLING_LIMIT) || 10;
