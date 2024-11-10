@@ -11,13 +11,29 @@ broker = Broker(cache)
 
 @router.get("/response")
 async def get_response(id: str):
-    return cache.getResponse(id=id)
+    response = cache.getResponse(id=id)
+    if not response:
+        raise HTTPException(status_code=404, detail="Response not found")
+    return response
 
 
 @router.post("/prompt")
 async def post_prompt(prompt: Prompt):
-    broker.send(prompt)
+    await broker.send_message(prompt)
     return { "id": prompt.id() }
+
+
+@app.on_event("startup")
+async def startup_event() -> None:
+    global broker
+    await broker.start()
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    global broker
+    if broker:
+        await broker.stop()
 
 
 app.include_router(router)
