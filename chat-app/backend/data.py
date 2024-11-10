@@ -53,7 +53,7 @@ class Cache:
 
         # Cache hit
         if result:
-            response = Response(id, result)
+            response = Response(id=id, response=result)
             return response
 
 

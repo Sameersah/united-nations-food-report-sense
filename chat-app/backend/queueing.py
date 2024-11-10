@@ -1,3 +1,5 @@
+import json
+
 import aiormq
 import asyncio
 import threading
@@ -25,14 +27,22 @@ class Broker:
     async def send_message(self, prompt: Prompt):
         print(prompt.id)
         print(prompt.message)
+        message = {
+            "id": prompt.id(),
+            "message": prompt.message
+        }
         await self.channel.basic_publish(
             exchange='',
             routing_key='question_queue',
-            body=prompt.json().encode('utf-8')
+            body=json.dumps(message).encode('utf-8')
         )
 
 
     async def receive_messages(self):
-        async for response in self.response_queue:
-            async with response.process():
-                print(f"{response.body.decode()}")
+        async def on_message(message):
+            print(f"{message.body.decode()}")
+            d = json.loads(message.body.decode())
+            response = Response(id=d['id'], response=d['response'])
+            self.cache.putResponse(response)
+            await message.channel.basic_ack(message.delivery.delivery_tag)
+        await self.channel.basic_consume(queue='response_queue', consumer_callback=on_message)

@@ -1,3 +1,4 @@
+import json
 import os
 
 import pika
@@ -45,21 +46,27 @@ query_engine = index.as_query_engine()
 
 
 def on_message(ch, method, properties, body):
-    question = body.decode()
-    print(f"Received question: {question}")
+    question = json.loads(body.decode())
+    question_id = question.get("id")
+    print(f"Received question with id: {question_id}")
+    question_message = question.get("message")
+    print(f"Received question message: {question_message}")
 
     try:
-
-        response = query_engine.query(question)
-        print(f"Response: {response}")
-
-
+        #response_message = query_engine.query(question_message)
+        response_message = "This is a test response 2"
+        print(f"Response: {response_message}")
+        response = {
+            "id": question_id,
+            "response": response_message
+        }
         ch.basic_publish(
             exchange='',
             routing_key='response_queue',
-            body=str(response)
+            body=json.dumps(response)
         )
-        print("Response sent to response queue.")
+        print(f"Response: {response}")
+        ch.basic_ack(delivery_tag=method.delivery_tag)
     except Exception as e:
         print(f"Error processing question: {e}")
 

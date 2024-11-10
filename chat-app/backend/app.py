@@ -19,8 +19,14 @@ async def get_response(id: str):
 
 @router.post("/prompt")
 async def post_prompt(prompt: Prompt):
-    await broker.send_message(prompt)
-    return { "id": prompt.id() }
+    ## redis cache check here if prompt exists
+    response = cache.getResponse(id=prompt.id())
+    if response:
+        print("Response found in cache")
+        return response
+    else:
+        await broker.send_message(prompt)
+        return { "id": prompt.id() }
 
 
 @app.on_event("startup")
