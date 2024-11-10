@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ChatHistory from './chatHistory';
+import ChatHistory from './chat/chatHistory';
 import ChatInput from './chat/chatInput';
 import { Layout, Typography } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
