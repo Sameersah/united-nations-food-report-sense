@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ChatHistory from './chatHistory';
-import ChatInput from './chatInput';
+import ChatInput from './chat/chatInput';
 import { Layout, Typography } from 'antd';
-import { MessageOutlined } from '@ant-design/icons'; // Icon import
+import { MessageOutlined } from '@ant-design/icons';
 import { sendMessage, clearHistory } from '../actions/chatActions';
 import '../App.css';
 
