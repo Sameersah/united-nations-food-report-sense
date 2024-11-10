@@ -11,7 +11,7 @@ export const sendMessage = (prompt) => async (dispatch) => {
   try {
     const id = await sendPrompt(prompt);
     if (!id) {
-      throw new Error('Eror while sending the prompt. Please try again.');
+      throw new Error('Error while sending the prompt. Please try again.');
     }
 
     let attempts = 0;

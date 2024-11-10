@@ -3,9 +3,22 @@ import os
 
 import pika
 from pika.exceptions import AMQPConnectionError
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageContext, load_index_from_storage
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageContext, load_index_from_storage, PromptTemplate
 
 os.environ["OPENAI_API_KEY"] = "API-KEY"
+
+
+template = (
+    "We have provided context information below. \n"
+    "---------------------\n"
+    "{context_str}"
+    "\n---------------------\n"
+    "You are an expert in food security and nutrition. Given the context information and not prior knowledge, answer the query. If asked to make comparisons try to answer using tabular formatted output and explain quantitative differences in numbers.\n"
+    "Query: {query_str}\n"
+    "Answer:"
+)
+
+rag_qa_prompt_template = PromptTemplate(template)
 
 
 PERSIST_DIR = "./saved_index"
@@ -43,6 +56,20 @@ def connect_to_rabbitmq():
 index = load_or_build_index()
 print("Index loaded successfully.")
 query_engine = index.as_query_engine()
+
+
+query_engine.update_prompts(
+    {"response_synthesizer:text_qa_template": rag_qa_prompt_template}
+)
+
+
+def display_prompt_dict(prompts_dict):
+    for k, p in prompts_dict.items():
+        print(f"Prompt key: {k}")
+        print(f"Prompt: {p.get_template()}")
+
+prompts_dict = query_engine.get_prompts()
+display_prompt_dict(prompts_dict)
 
 
 def on_message(ch, method, properties, body):

@@ -23,7 +23,7 @@ export const getResponse = async (id) => {
   }
   try {
     const response = await axios.get(`${API_URL}/response?id=${id}`);
-    if (response.status !== 200 || response.status !== 404) {
+    if (response.status !== 200 && response.status !== 404) {
       throw new Error('Failed to retrieve the response. Please try again.');
     }
     if (!response.data || typeof response.data.response !== 'string') {
@@ -31,6 +31,9 @@ export const getResponse = async (id) => {
     }
     return response;
   } catch (error) {
+    if(error && error.status === 404){
+      return {status: 404, data: {response: "No response found. Retrying."}}
+    }
     throw new Error('An error occurred while retrieving the response. Please try again later.');
   }
 };
