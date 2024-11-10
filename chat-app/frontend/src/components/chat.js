@@ -26,7 +26,7 @@ const Chat = () => {
     <Layout className="chat-container">
       <Header className="chat-header">
         <MessageOutlined className="chat-header-icon" />
-        <Title level={2} style={{ color: 'white', margin: 0 }}>United Nations Food Report Sense</Title>
+        <Title level={2} style={{ color: 'white', margin: 0 }}>UN Food Security and Nutrition Reports Sense</Title>
       </Header>
       <Content className="chat-content">
         <ChatHistory messages={messages} />
