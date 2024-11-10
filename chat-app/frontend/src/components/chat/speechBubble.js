@@ -16,13 +16,13 @@ const SpeechBubble = ({ text, isUser, isPlaceholder }) => {
         {isPlaceholder ? (
           <span className="speech-bubble-text">...</span>
         ) : isHTML ? (
-          <span className="speech-bubble-text" dangerouslySetInnerHTML={{ __html: expanded || !isLongText ? text : `${text.substring(0, 100)}...` }} />
+          <span className="speech-bubble-text" dangerouslySetInnerHTML={{ __html: text}} />
         ) : (
           <span className="speech-bubble-text">
             {expanded || !isLongText ? text : `${text.substring(0, 100)}...`}
           </span>
         )}
-        {!isPlaceholder && isLongText && (
+        {!isPlaceholder && isLongText && !isHTML && (
           <span className="read-more" onClick={toggleExpanded}>
             {expanded ? 'Read less' : 'Read more'}
           </span>
