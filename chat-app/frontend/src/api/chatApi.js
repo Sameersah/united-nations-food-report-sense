@@ -29,7 +29,7 @@ export const getResponse = async (id) => {
     if (!response.data || typeof response.data.response !== 'string') {
       throw new Error('Invalid response format. Please try again.');
     }
-    return response.data.response;
+    return response;
   } catch (error) {
     throw new Error('An error occurred while retrieving the response. Please try again later.');
   }
