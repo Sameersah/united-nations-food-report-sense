@@ -13,8 +13,9 @@ template = (
     "---------------------\n"
     "{context_str}"
     "\n---------------------\n"
-    "Given the context information and not prior knowledge, answer the query.\n"
-    "Query: {query_str}"
+    "You are an expert in food security and nutrition. Given the context information and not prior knowledge, answer the query. If asked to make comparisons try to answer using tabular formatted output and explain quantitative differences in numbers.\n"
+    "Query: {query_str}\n"
+    "Answer:"
 )
 
 rag_qa_prompt_template = PromptTemplate(template)
