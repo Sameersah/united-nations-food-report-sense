@@ -1,3 +1,5 @@
+from starlette.middleware.cors import CORSMiddleware
+
 from data import Prompt, Response, Cache
 from fastapi import APIRouter, Depends, HTTPException, FastAPI, Request
 from queueing import Broker
@@ -8,6 +10,18 @@ router = APIRouter()
 cache = Cache()
 broker = Broker(cache)
 
+# Add CORS middleware
+origins = [
+    "*",  # Allows all origins
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 @router.get("/response")
 async def get_response(id: str):
