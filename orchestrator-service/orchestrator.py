@@ -5,7 +5,7 @@ import pika
 from pika.exceptions import AMQPConnectionError
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageContext, load_index_from_storage
 
-os.environ["OPENAI_API_KEY"] = "API_KEY"
+os.environ["OPENAI_API_KEY"] = "API-KEY"
 
 
 PERSIST_DIR = "./saved_index"
@@ -53,12 +53,13 @@ def on_message(ch, method, properties, body):
     print(f"Received question message: {question_message}")
 
     try:
-        #response_message = query_engine.query(question_message)
-        response_message = "This is a test response 2"
+        response_message = query_engine.query(question_message)
+        print("type of response object from chatgpt {}",type(response_message))
+        #response_message = "This is a test response"
         print(f"Response: {response_message}")
         response = {
             "id": question_id,
-            "response": response_message
+            "response": str(response_message)
         }
         ch.basic_publish(
             exchange='',
