@@ -64,10 +64,8 @@ query_engine.update_prompts(
 
 def display_prompt_dict(prompts_dict):
     for k, p in prompts_dict.items():
-        text_md = f"**Prompt Key**: {k}<br>" f"**Text:** <br>"
-        display(Markdown(text_md))
-        print(p.get_template())
-        display(Markdown("<br><br>"))
+        print(f"Prompt key: {k}")
+        print(f"Prompt: {p.get_template()}")
 
 prompts_dict = query_engine.get_prompts()
 display_prompt_dict(prompts_dict)
